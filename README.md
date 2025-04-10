@@ -9,7 +9,7 @@ Code to replicate analyses by Brann et al.
 1. Create a new conda environment. `conda create -n dv_score python=3.9`
 2. Activate that env `conda activate dv_score`.
 3. Clone and enter this repo: `git clone git@github.com:dattalab/Brann_olfactory_dorsoventral.git && cd Brann_olfactory_dorsoventral`
-4. Install the code in this directory from the `setup.py` file via `pip install -e .`
+4. Install the code in this directory via `pip install -e .`
 5. To install the specific versions of packages used when this repo was created do `pip install -r requirements.txt`. The additional requirements for running the notebooks in this repo are to `pip install numpy seaborn scikit-learn jupyter notebook`. The scripts also rely on `pip install pysam scanpy`.
 
 
