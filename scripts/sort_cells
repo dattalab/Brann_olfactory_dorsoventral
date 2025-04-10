@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+date;hostname;pwd
+IN_FILE=${1}
+
+FILE=$(basename ${IN_FILE} ".bam")
+DIR=$(pwd)
+
+CORES=$(python -c "from osn_development.util import get_cores; print(min(int(get_cores()) // 5 * 5, 50))")
+echo "starting job, using $CORES cores"
+
+if [[ -z "${2}" ]]; then
+    echo "Assuming barcodes are in filtered_feature_bc_matrix folder of current directory"
+    BC=$DIR"/filtered_feature_bc_matrix/barcodes.tsv.gz"
+else
+    BC=${2};
+fi
+echo "Using barcodes: ${BC}"
+zcat $BC > barcodes.tsv
+
+
+# echo command
+echo "Processing $FILE"
+if [ -f $FILE.unique.bam ] && [ -f $FILE.unique.bam.bai ]; then
+    echo "found $FILE.unique.bam";
+else
+# run command to remove fake unique reads
+    echo "Extracting unique reads"
+    # only keep reads with UMI tag whose barcode CB was called as a cell
+    # only keep reads uniquely mapped to a gene
+    # exclude reads with MM tag
+    samtools view -b -q 255 -e '(![MM] && [GN]) && [UB]' \
+    -D CB:barcodes.tsv \
+    -o $FILE.unique.bam -@ $CORES $IN_FILE
+    samtools index -@ $CORES $FILE.unique.bam
+fi
+
+if [ -f cell_sorted_$FILE.unique.bam ]; then
+    echo "found existing cell_sorted bam"
+else 
+    echo "sorting by cell barcode"
+    samtools sort -@ $CORES -t CB -o cell_sorted_$FILE.unique.bam $FILE.unique.bam
+fi
+
+echo "Finished preprocessing bam file."
+date

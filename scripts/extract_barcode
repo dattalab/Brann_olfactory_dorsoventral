@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+date;hostname;pwd
+IN_FILE=${1}
+
+# use CR rather than CB to be more inclusive
+samtools view -e '[UB] && [CR]' $IN_FILE | grep CCGACCACCGAACGCAACGCACGCA > possorted_barcode.sam
+samtools view -H $IN_FILE > header.sam
+cat header.sam possorted_barcode.sam > possorted_barcode_with_header.sam
+
+# convert to bam
+samtools view -S -b possorted_barcode_with_header.sam > possorted_barcode_with_header.bam 
+
+echo "Finished preprocessing bam file."
+date
