@@ -100,7 +100,9 @@ def run(bam_fn, bcfile, out_fn, n_cores, print_every=5_000_000):
                 tags.append((read.get_tag("GN"), read.get_tag("UB")))
 
             # finish reading and process last cell
-            logging.info(f"Processing cell {n_cell} with CB: {current_cell} and {len(tags)} tags")
+            logging.info(
+                f"Processing cell {n_cell} with CB: {current_cell} and {len(tags)} tags"
+            )
             future = executor.submit(process, tags, current_cell)
             futures.append(future)
 

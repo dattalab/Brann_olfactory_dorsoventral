@@ -3,3 +3,6 @@
 *.pyc
 __pycache__/
 *.ipynb_checkpoints
+*.gz
+*.parquet
+!DV_score_all_mature_OSNs.parquet

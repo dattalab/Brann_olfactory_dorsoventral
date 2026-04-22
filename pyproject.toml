@@ -25,6 +25,9 @@ default = ["pandas", "pysam", "scanpy", "anndata"]
 [tool.setuptools]
 packages = ["dv_score"]
 
+[tool.setuptools.package-data]
+"dv_score.viz" = ["*.mplstyle"]
+
 [project.scripts]
 filter_bam = "dv_score.preprocess.filter_bam:main"
 make_adata = "dv_score.preprocess.make_adata:main"
