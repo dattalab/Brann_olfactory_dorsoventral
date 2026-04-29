@@ -10,7 +10,7 @@ Although topographical maps organize many peripheral sensory systems, mouse olfa
 
 ## Manuscript
 
-For more details, please see our Open Access manuscript [here](https://doi.org/10.1101/2025.05.02.651738).
+For more details, please see our Open Access manuscript in *Cell* [here](https://doi.org/10.1016/j.cell.2026.03.051), and the original preprint [here](https://doi.org/10.1101/2025.05.02.651738).
 
 # Installation
 
